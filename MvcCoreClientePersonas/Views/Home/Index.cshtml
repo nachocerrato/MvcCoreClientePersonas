@@ -1,0 +1,56 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#botonpersonas").click(function () {
+                alert("Dentro");
+                var url =
+                    "https://apipersonasnachocerrato.azurewebsites.net/api/personas";
+                $.ajax({
+                    url: url,
+                    method: "GET",
+                    dataType: "json",
+                    success: function (data) {
+                        var html = "";
+                        $.each(data, function (index, persona) {
+                            //PARA RECUPERAR DATOS SE UTILIZA EL OBJETO persona
+                            //Y SE ESCRIBEN LAS PROPIEDADES DEL JSON DIRECTAMENTE
+                            var id = persona.idPersona;
+                            var nombre = persona.nombre;
+                            var edad = persona.edad;
+                            html += "<tr>";
+                            html += "<td>" + id + "</td>";
+                            html += "<td>" + nombre + "</td>";
+                            html += "<td>" + edad + "</td>";
+                            html += "</tr>";
+
+                        });
+                        $("#tablapersonas tbody").html(html);
+                    }
+                });
+            });
+        });
+    </script>
+}
+
+<div class="text-center">
+    <button type="button" id="botonpersonas"
+            class="btn-info">
+        Leer servicio API Personas
+    </button>
+    <table class="table table-active" id="tablapersonas">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Edad</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+</div>
